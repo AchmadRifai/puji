@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/refreshThis"
+        android:icon="@drawable/refreshe"
+        android:title="Refresh"
+        android:orderInCategory="100"
+        />
+    <item android:id="@+id/keranjangThis"
+        android:icon="@drawable/keranjang"
+        android:title="Cart"
+        android:orderInCategory="200"
+        />
+</menu>
