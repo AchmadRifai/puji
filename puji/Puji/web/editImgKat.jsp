@@ -160,6 +160,65 @@ desired effect
                       </div>
               </form>
 </div>
+          <div class="box box-primary">
+    <div class="box-header with-border">
+        <h3 class="box-title">Daftar Menu</h3>
+        <div class="box-tools pull-right">
+            <span class="label label-primary">
+                <%
+                    try{
+                        util.Db d=new util.Db();
+                        java.sql.PreparedStatement p=d.getPrep("select count(kode)as itung from menu where kat=?");
+                        p.setInt(1, Integer.parseInt(""+request.getSession().getAttribute("kat")));
+                        java.sql.ResultSet r=p.executeQuery();
+                        if(r.next())out.print(""+r.getInt("itung")+" Menu");
+                        r.close();
+                        p.close();
+                        d.close();
+                    }catch(java.sql.SQLException ex){util.Db.hindar(ex, request.getRemoteAddr());}
+                %>
+            </span>
+            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                <i class="fa fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-box-tool" data-widget="remove">
+                <i class="fa fa-times"></i>
+            </button>
+        </div>
+    </div>
+            <div class="box-body no-padding">
+                <ul class="users-list clearfix">
+                    <%
+                        try{
+                            util.Db d=new util.Db();
+                            java.sql.PreparedStatement p=d.getPrep("select kode,nama,gbr,harga from menu where kat=?");
+                            p.setInt(1, Integer.parseInt(""+request.getSession().getAttribute("kat")));
+                            java.sql.ResultSet r=p.executeQuery();
+                            while(r.next()){
+                    %>
+                    <li>
+                        <img src="<%out.print(r.getString("gbr")); %>" alt="Menu">
+                        <a class="users-list-name" href="menuDetail.jsp?kode=<%out.print(r.getString("kode")); %>">
+                            <%out.print(r.getString("nama")); %>
+                        </a>
+                        <span class="users-list-date"><%
+                            org.joda.money.Money m=org.joda.money.Money.of(org.joda.money.CurrencyUnit.of("IDR"), 
+                                    Long.parseLong(r.getString("harga")));
+                            out.print(""+m);
+                            %></span>
+                    </li>
+                    <%
+                            }r.close();
+                            p.close();
+                            d.close();
+                        }catch(java.sql.SQLException ex){util.Db.hindar(ex, request.getRemoteAddr());}
+                    %>
+                </ul>
+            </div>
+                <div class="box-footer text-center">
+                    <a href="semuaMenu.jsp" class="uppercase">Lihat Semua</a>
+                </div>
+</div>
       <!--------------------------
         | Your Page Content Here |
         -------------------------->

@@ -42,7 +42,7 @@ public class Db {
             com.mysql.jdbc.Driver.class.newInstance();
         } catch (InstantiationException | IllegalAccessException ex) {
             Db.hindar(ex,"localhost");
-        }c=java.sql.DriverManager.getConnection("jdbc:mysql://localhost/resto", "root", "kirana");
+        }c=java.sql.DriverManager.getConnection("jdbc:mysql://localhost/resto", "root", "");
         s=c.createStatement();
     }
 
