@@ -509,7 +509,7 @@ try{
                     %>
                     <li>
                         <img src="<%out.print(r.getString("gbr")); %>" alt="Menu">
-                        <a class="users-list-name" href="menuDetail.jsp?kode=<%out.print(r.getString("kode")); %>">
+                        <a class="users-list-name" href="menuDetail.php?kode=<%out.print(r.getString("kode")); %>">
                             <%out.print(r.getString("nama")); %>
                         </a>
                         <span class="users-list-date"><%

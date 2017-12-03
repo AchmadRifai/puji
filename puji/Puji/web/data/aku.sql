@@ -15,23 +15,6 @@
 -- Membuang struktur basisdata untuk resto
 CREATE DATABASE IF NOT EXISTS `resto` /*!40100 DEFAULT CHARACTER SET latin1 */;
 USE `resto`;
-
--- membuang struktur untuk table resto.item_pesanan
-CREATE TABLE IF NOT EXISTS `item_pesanan` (
-  `nota` varchar(20) NOT NULL,
-  `menu` varchar(20) NOT NULL,
-  `qty` int(11) NOT NULL,
-  `hrg` text NOT NULL,
-  KEY `FK__pesanan` (`nota`),
-  KEY `FK__menu` (`menu`),
-  CONSTRAINT `FK__menu` FOREIGN KEY (`menu`) REFERENCES `menu` (`kode`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK__pesanan` FOREIGN KEY (`nota`) REFERENCES `pesanan` (`nota`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- Membuang data untuk tabel resto.item_pesanan: ~0 rows (lebih kurang)
-/*!40000 ALTER TABLE `item_pesanan` DISABLE KEYS */;
-/*!40000 ALTER TABLE `item_pesanan` ENABLE KEYS */;
-
 -- membuang struktur untuk table resto.karyawan
 CREATE TABLE IF NOT EXISTS `karyawan` (
   `kode` varchar(20) NOT NULL,
@@ -50,7 +33,6 @@ INSERT INTO `karyawan` (`kode`, `pass`, `nama`, `almt`, `jab`, `mlebu`) VALUES
 	('dapur', 'dpr', 'koki', '-', 'koki', 0),
 	('kasir', 'ksr', 'lobby', '-', 'teller', 0);
 /*!40000 ALTER TABLE `karyawan` ENABLE KEYS */;
-
 -- membuang struktur untuk table resto.kat_menu
 CREATE TABLE IF NOT EXISTS `kat_menu` (
   `kode` int(11) NOT NULL,
@@ -58,19 +40,6 @@ CREATE TABLE IF NOT EXISTS `kat_menu` (
   `gbr` text NOT NULL,
   PRIMARY KEY (`kode`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- Membuang data untuk tabel resto.kat_menu: ~6 rows (lebih kurang)
-/*!40000 ALTER TABLE `kat_menu` DISABLE KEYS */;
-INSERT INTO `kat_menu` (`kode`, `nama`, `gbr`) VALUES
-	(1, 'Hot Drink', 'img/hot%20drink.png'),
-	(2, 'Soft Drink', 'img/soft%20drink.png'),
-	(3, 'Juice', 'img/juice.png'),
-	(4, 'Paket', 'img/paket.png'),
-	(5, 'Sayur', 'img/sayur.png'),
-	(6, 'Seafood', 'img/seafood.png');
-/*!40000 ALTER TABLE `kat_menu` ENABLE KEYS */;
-
--- membuang struktur untuk table resto.meja
 CREATE TABLE IF NOT EXISTS `meja` (
   `nomor` int(11) NOT NULL,
   `ket` text NOT NULL,
@@ -83,6 +52,35 @@ INSERT INTO `meja` (`nomor`, `ket`) VALUES
 	(1, '-'),
 	(2, '-');
 /*!40000 ALTER TABLE `meja` ENABLE KEYS */;
+
+-- Membuang data untuk tabel resto.kat_menu: ~6 rows (lebih kurang)
+/*!40000 ALTER TABLE `kat_menu` DISABLE KEYS */;
+INSERT INTO `kat_menu` (`kode`, `nama`, `gbr`) VALUES
+	(1, 'Hot Drink', 'img/hot%20drink.png'),
+	(2, 'Soft Drink', 'img/soft%20drink.png'),
+	(3, 'Juice', 'img/juice.png'),
+	(4, 'Paket', 'img/paket.png'),
+	(5, 'Sayur', 'img/sayur.png'),
+	(6, 'Seafood', 'img/seafood.png');
+/*!40000 ALTER TABLE `kat_menu` ENABLE KEYS */;
+
+-- membuang struktur untuk table resto.item_pesanan
+CREATE TABLE IF NOT EXISTS `item_pesanan` (
+  `nota` varchar(20) NOT NULL,
+  `menu` varchar(20) NOT NULL,
+  `qty` int(11) NOT NULL,
+  `hrg` text NOT NULL,
+  KEY `FK__pesanan` (`nota`),
+  KEY `FK__menu` (`menu`),
+  CONSTRAINT `FK__menu` FOREIGN KEY (`menu`) REFERENCES `menu` (`kode`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK__pesanan` FOREIGN KEY (`nota`) REFERENCES `pesanan` (`nota`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- Membuang data untuk tabel resto.item_pesanan: ~0 rows (lebih kurang)
+/*!40000 ALTER TABLE `item_pesanan` DISABLE KEYS */;
+/*!40000 ALTER TABLE `item_pesanan` ENABLE KEYS */;
+
+-- membuang struktur untuk table resto.meja
 
 -- membuang struktur untuk table resto.menu
 CREATE TABLE IF NOT EXISTS `menu` (

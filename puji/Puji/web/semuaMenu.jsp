@@ -1,6 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%><%
     util.General.ajarAdmin(request, response);
-    if(null==request.getSession().getAttribute("bahan"))response.sendRedirect("dash.jsp");
 %><!DOCTYPE html>
 <!--
 This is a starter template page. Use this page to start your new project from
@@ -9,8 +8,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <html>
 <head>
   <meta charset="utf-8">
+   <meta http-equiv="refresh" content="5">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Pemasokan Barang Admin | Ayam Bakar Wong Solo</title>
+  <title>Daftar Menu Admin | Ayam Bakar Wong Solo</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
@@ -99,7 +99,7 @@ desired effect
           <ul class="sidebar-menu" data-widget="tree">
               <li class="header">Tools</li>
               <li><a href="dash-admin.jsp"><i class="fa fa-home"></i> <span>Home</span></a></li>
-              <li class="active"><a href="semuaBahan.jsp"><i class="fa fa-bank"></i> <span>Persediaan</span></a></li>
+              <li class="active"><a href="semuaKat.jsp"><i class="fa fa-list"></i> <span>Menu</span></a></li>
           </ul>
       </section>
   </aside>
@@ -115,44 +115,66 @@ desired effect
         <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
         <li>Admin</li>
         <li>Daftar</li>
-        <li>Bahan</li>
-        <li class="active">Edit</li>
+        <li class="active">Bahan</li>
       </ol>
     </section>
 
     <!-- Main content -->
     <section class="content container-fluid">
         <div class="box box-primary">
-            <div class="box-header with-border">
-                <h3 class="box-title">Kulaan <%out.print(request.getSession().getAttribute("bahan")); %></h3>
-            </div>
-            <form role="form" action="kulaan.php" method="POST">
-                <div class="form-group">
-                    <div class="input-group">
-                        <label for="jum">Jumlah *</label>
-                        <input type="number" class="form-control" min="1" value="1" step="1" name="jum" id="jum">
-                        <span class="input-group-addon">
-                            <%
-                                try{
-                                    util.Db d=new util.Db();
-                                    java.sql.PreparedStatement p=d.getPrep("select satuan from persediaan where kode=?");
-                                    p.setString(1, request.getParameter("kode"));
-                                    java.sql.ResultSet r=p.executeQuery();
-                                    if(r.next())out.print(r.getString("satuan"));
-                                    r.close();
-                                    p.close();
-                                    d.close();
-                                }catch(java.sql.SQLException ex){util.Db.hindar(ex, request.getRemoteAddr());}
-                            %>
-                        </span>
-                    </div>
-                </div>
-                <div class="box-footer">
-                    <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Simpan</button>
-                </div>
-            </form>
+    <div class="box-header with-border">
+        <h3 class="box-title">Daftar Menu</h3>
+        <div class="box-tools pull-right">
+            <span class="label label-primary">
+                <%
+                    try{
+                        util.Db d=new util.Db();
+                        java.sql.ResultSet r=d.getResult("select count(kode)as itung from menu");
+                        if(r.next())out.print(""+r.getInt("itung")+" Menu");
+                        r.close();
+                        d.close();
+                    }catch(java.sql.SQLException ex){util.Db.hindar(ex, request.getRemoteAddr());}
+                %>
+            </span>
+            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                <i class="fa fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-box-tool" data-widget="remove">
+                <i class="fa fa-times"></i>
+            </button>
         </div>
-      <!--------------------------
+    </div>
+            <div class="box-body no-padding">
+                <ul class="users-list clearfix">
+                    <%
+                        try{
+                            util.Db d=new util.Db();
+                            java.sql.ResultSet r=d.getResult("select kode,nama,gbr,harga from menu");
+                            while(r.next()){
+                    %>
+                    <li>
+                        <img src="<%out.print(r.getString("gbr")); %>" alt="Menu">
+                        <a class="users-list-name" href="menuDetail.php?kode=<%out.print(r.getString("kode")); %>">
+                            <%out.print(r.getString("nama")); %>
+                        </a>
+                        <span class="users-list-date"><%
+                            org.joda.money.Money m=org.joda.money.Money.of(org.joda.money.CurrencyUnit.of("IDR"), 
+                                    Long.parseLong(r.getString("harga")));
+                            out.print(""+m);
+                            %></span>
+                    </li>
+                    <%
+                            }r.close();
+                            d.close();
+                        }catch(java.sql.SQLException ex){util.Db.hindar(ex, request.getRemoteAddr());}
+                    %>
+                </ul>
+            </div>
+                <div class="box-footer text-center">
+                    <a href="addMenu.jsp" class="uppercase">Tambah Menu</a>
+                </div>
+</div>
+        <!--------------------------
         | Your Page Content Here |
         -------------------------->
 

@@ -132,6 +132,10 @@
         <servlet-name>editImgKat.exe</servlet-name>
         <servlet-class>exe.EditImgKat</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>MenuDetail.php</servlet-name>
+        <servlet-class>php.MenuDetail</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>dash.php</servlet-name>
         <url-pattern>/dash.php</url-pattern>
@@ -259,6 +263,10 @@
     <servlet-mapping>
         <servlet-name>editImgKat.exe</servlet-name>
         <url-pattern>/editImgKat.exe</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MenuDetail.php</servlet-name>
+        <url-pattern>/menuDetail.php</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
