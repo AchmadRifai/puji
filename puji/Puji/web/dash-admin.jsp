@@ -137,7 +137,7 @@ desired effect
             <!-- /.box-header -->
             <div class="box-body">
               <div class="table-responsive">
-                <table class="table no-margin">
+                  <table class="table no-margin table-bordered table-hover" id="tblKaryawan">
                   <thead>
                   <tr>
                     <th>Nama</th>
@@ -151,7 +151,7 @@ desired effect
                       <%
 try{
     util.Db d=new util.Db();
-    java.sql.ResultSet r=d.getResult("select kode,nama,almt,jab,mlebu from karyawan limit 5");
+    java.sql.ResultSet r=d.getResult("select kode,nama,almt,jab,mlebu from karyawan");
     while(r.next()){
         %>
         <tr>
@@ -213,7 +213,7 @@ try{
             <!-- /.box-header -->
             <div class="box-body">
               <div class="table-responsive">
-                <table class="table no-margin">
+                  <table class="table no-margin table-bordered table-hover" id="tblSedia">
                   <thead>
                   <tr>
                     <th>Nama</th>
@@ -225,7 +225,7 @@ try{
                       <%
 try{
     util.Db d=new util.Db();
-    java.sql.ResultSet r=d.getResult("select*from persediaan limit 5");
+    java.sql.ResultSet r=d.getResult("select*from persediaan");
     while(r.next()){
         %>
         <tr>
@@ -288,7 +288,7 @@ try{
             <!-- /.box-header -->
             <div class="box-body">
               <div class="table-responsive">
-                <table class="table no-margin">
+                  <table class="table no-margin table-bordered table-hover" id="tblMeja">
                   <thead>
                   <tr>
                     <th>Nomor</th>
@@ -300,7 +300,7 @@ try{
                       <%
 try{
     util.Db d=new util.Db();
-    java.sql.ResultSet r=d.getResult("select nomor,ket from meja limit 5");
+    java.sql.ResultSet r=d.getResult("select nomor,ket from meja");
     while(r.next()){
         %>
         <tr>
@@ -341,7 +341,7 @@ try{
             </div>
             <!-- /.box-body -->
             <div class="box-footer clearfix">
-              <a href="tambahMeja.jsp" class="btn btn-sm btn-info btn-flat pull-left">Tambah Bahan</a>
+              <a href="tambahMeja.jsp" class="btn btn-sm btn-info btn-flat pull-left">Tambah Meja</a>
               <a href="semuaMeja.jsp" class="btn btn-sm btn-default btn-flat pull-right">View All</a>
             </div>
             <!-- /.box-footer -->
@@ -359,7 +359,7 @@ try{
             <!-- /.box-header -->
             <div class="box-body">
               <div class="table-responsive">
-                <table class="table no-margin">
+                  <table class="table no-margin table-bordered table-hover" id="tblPesan">
                   <thead>
                   <tr>
                     <th>Nota</th>
@@ -373,7 +373,7 @@ try{
                       <%
 try{
     util.Db d=new util.Db();
-    java.sql.ResultSet r=d.getResult("select nota,meja,tgl,total,terima from pesanan where submitted order by tgl desc limit 5");
+    java.sql.ResultSet r=d.getResult("select nota,meja,tgl,total,terima from pesanan where submitted order by tgl desc");
     while(r.next()){
         %>
         <tr>
@@ -568,7 +568,14 @@ try{
 <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <!-- AdminLTE App -->
 <script src="dist/js/adminlte.min.js"></script>
-
+<script>
+    $(function(){
+        $('#tblKaryawan').DataTable();
+        $('#tblSedia').DataTable();
+        $('#tblMeja').DataTable();
+        $('#tblPesan').DataTable();
+    });
+</script>
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the
      user experience. -->
