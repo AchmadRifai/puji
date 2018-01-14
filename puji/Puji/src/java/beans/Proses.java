@@ -13,6 +13,7 @@ import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperPrintManager;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import util.Db;
@@ -27,7 +28,8 @@ public class Proses {
         m.put("notane", nota);
         JasperReport jr=JasperCompileManager.compileReport(System.getProperty("user.home")+"/struk.jrxml");
         JasperPrint jp=JasperFillManager.fillReport(jr, m, d.getC());
-        JasperExportManager.exportReportToPdfFile(jp, System.getProperty("user.home")+"/Desktop/s.pdf");
+        JasperExportManager.exportReportToHtmlFile(jp, System.getProperty("user.home")+"/Desktop/s.html");
+        //JasperPrintManager.printReport(jp, false);
     }
 
     private static List<Data> loading(String nota, Db d) throws SQLException {
