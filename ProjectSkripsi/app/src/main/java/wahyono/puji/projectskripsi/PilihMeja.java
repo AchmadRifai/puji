@@ -25,6 +25,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import wahyono.puji.projectskripsi.adapter.KatAdapter;
+import wahyono.puji.projectskripsi.util.Work;
 import wahyono.puji.projectskripsi.ws.Api;
 import wahyono.puji.projectskripsi.ws.Kat;
 import wahyono.puji.projectskripsi.ws.Msg;
@@ -69,7 +70,7 @@ public class PilihMeja extends AppCompatActivity {
     }
 
     private void muat() {
-        Retrofit r=new Retrofit.Builder().baseUrl(getString(R.string.api_url)).
+        Retrofit r=new Retrofit.Builder().baseUrl(Work.getUrl(this)).
                 addConverterFactory(GsonConverterFactory.create()).build();
         Api a=r.create(Api.class);
         a.getKategori().enqueue(new Callback<List<Kat>>() {
@@ -126,7 +127,7 @@ public class PilihMeja extends AppCompatActivity {
 
     private void batalkanPesan() {
         Retrofit r=new Retrofit.Builder().
-                baseUrl(getString(R.string.api_url)).
+                baseUrl(Work.getUrl(this)).
                 addConverterFactory(GsonConverterFactory.create()).build();
         Api a=r.create(Api.class);
         a.batalTrans(nota).enqueue(new Callback<Msg>() {

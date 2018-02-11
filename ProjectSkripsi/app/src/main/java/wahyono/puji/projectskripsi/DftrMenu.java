@@ -20,6 +20,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import wahyono.puji.projectskripsi.adapter.MenuAdapter;
+import wahyono.puji.projectskripsi.util.Work;
 import wahyono.puji.projectskripsi.ws.Api;
 
 public class DftrMenu extends AppCompatActivity {
@@ -43,7 +44,7 @@ public class DftrMenu extends AppCompatActivity {
     }
 
     private void muat() {
-        Retrofit r=new Retrofit.Builder().baseUrl(getString(R.string.api_url))
+        Retrofit r=new Retrofit.Builder().baseUrl(Work.getUrl(this))
                 .addConverterFactory(GsonConverterFactory.create()).build();
         Api a=r.create(Api.class);
         a.getMenu(Integer.parseInt(kode)).enqueue(new Callback<List<wahyono.puji.projectskripsi.ws.Menu>>() {

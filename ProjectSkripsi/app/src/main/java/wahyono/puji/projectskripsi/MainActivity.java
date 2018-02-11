@@ -12,6 +12,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import wahyono.puji.projectskripsi.util.Work;
 import wahyono.puji.projectskripsi.ws.Api;
 import wahyono.puji.projectskripsi.ws.BahanNota;
 
@@ -20,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        if(Work.checkDB(this))alihkan();
         getSupportActionBar().hide();
         TextView t=(TextView)findViewById(R.id.textView);
         t.setOnClickListener(new View.OnClickListener() {
@@ -30,6 +32,11 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void alihkan() {
+        startActivity(new Intent(this,konfig.class));
+        finish();
+    }
+
     @Override
     public void onBackPressed() {
         finish();
@@ -38,10 +45,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void pesan(){
         Retrofit r=new Retrofit.Builder().
-                baseUrl(getString(R.string.api_url)).
+                baseUrl(Work.getUrl(this)).
                 addConverterFactory(GsonConverterFactory.create()).build();
         Api a=r.create(Api.class);
-        a.getNota(getString(R.string.nomor_meja)).enqueue(new Callback<BahanNota>() {
+        int meja=Work.getMeja(this);
+        a.getNota(""+meja).enqueue(new Callback<BahanNota>() {
             @Override
             public void onResponse(Call<BahanNota> call, Response<BahanNota> response) {
                 BahanNota b=response.body();

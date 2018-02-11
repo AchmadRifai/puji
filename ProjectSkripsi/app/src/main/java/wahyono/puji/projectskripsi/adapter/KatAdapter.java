@@ -16,6 +16,7 @@ import java.util.List;
 
 import wahyono.puji.projectskripsi.DftrMenu;
 import wahyono.puji.projectskripsi.R;
+import wahyono.puji.projectskripsi.util.Work;
 import wahyono.puji.projectskripsi.ws.Kat;
 
 /**
@@ -45,7 +46,7 @@ public class KatAdapter extends RecyclerView.Adapter<KatAdapter.KatHolder>{
     public void onBindViewHolder(KatHolder holder, int position) {
         final Kat k=l.get(position);
         holder.nama.setText(k.getNama());
-        Glide.with(c).load(c.getString(R.string.api_url)+k.getGbr()).into(holder.thumb);
+        Glide.with(c).load(Work.getUrl(a)+k.getGbr()).into(holder.thumb);
         holder.nama.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

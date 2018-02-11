@@ -19,6 +19,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import wahyono.puji.projectskripsi.util.Work;
 import wahyono.puji.projectskripsi.ws.Api;
 import wahyono.puji.projectskripsi.ws.Msg;
 
@@ -62,7 +63,7 @@ public class AddYo extends AppCompatActivity {
     }
 
     private void saveData() {
-        Retrofit r=new Retrofit.Builder().baseUrl(getString(R.string.api_url))
+        Retrofit r=new Retrofit.Builder().baseUrl(Work.getUrl(this))
                 .addConverterFactory(GsonConverterFactory.create()).build();
         Api a=r.create(Api.class);
         a.tumpukPesanan(nota,menu,""+num.getText()).enqueue(new Callback<Msg>() {
@@ -86,7 +87,7 @@ public class AddYo extends AppCompatActivity {
 
     private void muat() {
         nm.setText(nama);
-        Glide.with(this).load(getString(R.string.api_url)+gbr).into(gbrV);
+        Glide.with(this).load(Work.getUrl(this)+gbr).into(gbrV);
         num.setText("0");
         harga.setText(""+rego);
     }

@@ -18,6 +18,7 @@ import java.util.List;
 
 import wahyono.puji.projectskripsi.AddYo;
 import wahyono.puji.projectskripsi.R;
+import wahyono.puji.projectskripsi.util.Work;
 import wahyono.puji.projectskripsi.ws.Menu;
 
 /**
@@ -48,7 +49,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuHolder>{
         Money mon=Money.of(CurrencyUnit.of("IDR"),Long.parseLong(m.getHarga()));
         holder.hrg.setText(""+mon);
         holder.nama.setText(m.getNama());
-        Glide.with(a).load(a.getString(R.string.api_url)+m.getGbr()).into(holder.thumb);
+        Glide.with(a).load(Work.getUrl(a)+m.getGbr()).into(holder.thumb);
         holder.thumb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

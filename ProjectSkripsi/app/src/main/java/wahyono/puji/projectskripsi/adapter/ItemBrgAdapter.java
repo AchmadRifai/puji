@@ -1,5 +1,6 @@
 package wahyono.puji.projectskripsi.adapter;
 
+import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import wahyono.puji.projectskripsi.ItemTemp;
 import wahyono.puji.projectskripsi.R;
+import wahyono.puji.projectskripsi.util.Work;
 import wahyono.puji.projectskripsi.ws.Api;
 import wahyono.puji.projectskripsi.ws.ItemBrg;
 import wahyono.puji.projectskripsi.ws.Msg;
@@ -28,9 +30,11 @@ import wahyono.puji.projectskripsi.ws.Msg;
 public class ItemBrgAdapter extends RecyclerView.Adapter<ItemBrgAdapter.ItemBrgHolder>{
     private ItemTemp a;
     private List<ItemBrg>l;
+    private Activity ac;
 
-    public ItemBrgAdapter(ItemTemp a, List<ItemBrg> l) {
+    public ItemBrgAdapter(ItemTemp a, List<ItemBrg> l, Activity ac) {
         this.a = a;
+        this.ac=ac;
         this.l = l;
     }
 
@@ -55,7 +59,7 @@ public class ItemBrgAdapter extends RecyclerView.Adapter<ItemBrgAdapter.ItemBrgH
     }
 
     private void hapus(ItemBrg i) {
-        Retrofit r=new Retrofit.Builder().baseUrl(a.getString(R.string.api_url)).
+        Retrofit r=new Retrofit.Builder().baseUrl(Work.getUrl(ac)).
                 addConverterFactory(GsonConverterFactory.create()).build();
         Api a=r.create(Api.class);
         a.delItemPesan(this.a.nota,i.getKode()).enqueue(new Callback<Msg>() {

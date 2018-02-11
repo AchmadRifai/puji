@@ -21,6 +21,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import wahyono.puji.projectskripsi.adapter.ItemBrgAdapter;
+import wahyono.puji.projectskripsi.util.Work;
 import wahyono.puji.projectskripsi.ws.Api;
 import wahyono.puji.projectskripsi.ws.ItemBrg;
 import wahyono.puji.projectskripsi.ws.Msg;
@@ -45,7 +46,7 @@ public class ItemTemp extends AppCompatActivity {
         but.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Retrofit r=new Retrofit.Builder().baseUrl(getString(R.string.api_url))
+                Retrofit r=new Retrofit.Builder().baseUrl(Work.getUrl(ItemTemp.this))
                         .addConverterFactory(GsonConverterFactory.create()).build();
                 Api a=r.create(Api.class);
                 a.validTrans(nota).enqueue(new Callback<Msg>() {
@@ -71,7 +72,7 @@ public class ItemTemp extends AppCompatActivity {
     }
 
     public void muat() {
-        Retrofit r=new Retrofit.Builder().baseUrl(getString(R.string.api_url)).
+        Retrofit r=new Retrofit.Builder().baseUrl(Work.getUrl(this)).
                 addConverterFactory(GsonConverterFactory.create()).build();
         Api a=r.create(Api.class);
         a.getDaftar(nota).enqueue(new Callback<List<ItemBrg>>() {
@@ -90,7 +91,7 @@ public class ItemTemp extends AppCompatActivity {
     private void kalkulasi(List<ItemBrg> l) {
         rec.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
         rec.setItemAnimator(new DefaultItemAnimator());
-        rec.setAdapter(new ItemBrgAdapter(this,l));
+        rec.setAdapter(new ItemBrgAdapter(this,l,this));
         org.joda.money.Money total=org.joda.money.Money.zero(CurrencyUnit.of("IDR"));
         for(ItemBrg i:l)total=total.plus(org.joda.money.Money.parse(i.getHrg()));
         tot.setText("Total : "+total);
