@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:padding="6dp"
+    android:background="@color/allBG"
+    android:layout_height="?android:attr/listPreferredItemHeight">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/menuIteme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="MENU"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/hrgIteme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="HARGA"
+                android:textSize="10sp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/qtyIteme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:text="QTY"
+            android:textAlignment="viewEnd"
+            android:textSize="10sp" />
+    </LinearLayout>
+</RelativeLayout>

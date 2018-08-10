@@ -29,6 +29,7 @@ public class AddYo extends AppCompatActivity {
     private ImageView gbrV;
     private TextView nm,harga,num;
     private Button add,min,apply;
+    private boolean running;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

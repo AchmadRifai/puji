@@ -11,8 +11,8 @@ import retrofit2.http.Path;
  */
 
 public interface Api {
-    @GET("json/pesan/{m}")
-    Call<BahanNota>getNota(@Path("m") String nomor);
+    @GET("json/pesan/{m}/{nm}/{hp}")
+    Call<BahanNota>getNota(@Path("m") String nomor,@Path("nm") String nm,@Path("hp") String hp);
 
     @GET("json/pesan/{nota}/{menu}/{qty}")
     Call<Msg>tumpukPesanan(@Path("nota") String nota,@Path("menu") String menu,@Path("qty") String qty);
@@ -37,4 +37,7 @@ public interface Api {
 
     @GET("json/pesan/delItem/{nota}/{menu}")
     Call<Msg>delItemPesan(@Path("nota") String nota,@Path("menu") String menu);
+
+    @GET("json/pesan/lagi/{nota}")
+    Call<Msg>lagiPesan(@Path("nota") String nota);
 }

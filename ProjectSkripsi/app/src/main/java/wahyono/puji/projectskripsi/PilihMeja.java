@@ -33,12 +33,14 @@ import wahyono.puji.projectskripsi.ws.Msg;
 public class PilihMeja extends AppCompatActivity {
     private RecyclerView rec;
     private String nota;
+    private boolean running;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pilih_meja);
         toolbare();
+        running=true;
         nota=getIntent().getStringExtra("nota");
         rec=(RecyclerView)findViewById(R.id.tayangKat);
         muat();
@@ -70,6 +72,7 @@ public class PilihMeja extends AppCompatActivity {
     }
 
     private void muat() {
+        cek();
         Retrofit r=new Retrofit.Builder().baseUrl(Work.getUrl(this)).
                 addConverterFactory(GsonConverterFactory.create()).build();
         Api a=r.create(Api.class);
@@ -82,6 +85,60 @@ public class PilihMeja extends AppCompatActivity {
             @Override
             public void onFailure(Call<List<Kat>> call, Throwable t) {
                 Toast.makeText(PilihMeja.this,"Gagal memuat",Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void cek() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (running){
+                    Retrofit r=new Retrofit.Builder().baseUrl(Work.getUrl(PilihMeja.this)).
+                            addConverterFactory(GsonConverterFactory.create()).build();
+                    Api a=r.create(Api.class);
+                    a.lagiPesan(nota).enqueue(new Callback<Msg>() {
+                        @Override
+                        public void onResponse(Call<Msg> call, Response<Msg> response) {
+                            Msg m=response.body();
+                            if("Error"!=m.getPesan()){
+                                if("Keluar"==m.getPesan()){
+                                    batal();
+                                    startActivity(new Intent(PilihMeja.this,MainActivity.class));
+                                    finish();
+                                }
+                            }else Toast.makeText(PilihMeja.this,"Gagal memuat",
+                                    Toast.LENGTH_LONG).show();
+                        }
+                        @Override
+                        public void onFailure(Call<Msg> call, Throwable t) {
+                            Toast.makeText(PilihMeja.this,"Gagal memuat",
+                                    Toast.LENGTH_LONG).show();
+                        }
+                    });
+                    try {
+                        Thread.sleep(10000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
+    }
+
+    private void batal() {
+        Retrofit r=new Retrofit.Builder().
+                baseUrl(Work.getUrl(this)).
+                addConverterFactory(GsonConverterFactory.create()).build();
+        Api a=r.create(Api.class);
+        a.batalTrans(nota).enqueue(new Callback<Msg>() {
+            @Override
+            public void onResponse(Call<Msg> call, Response<Msg> response) {
+                Toast.makeText(PilihMeja.this,"Pembatalan Berhasil",Toast.LENGTH_LONG).show();
+            }
+            @Override
+            public void onFailure(Call<Msg> call, Throwable t) {
+                Toast.makeText(PilihMeja.this,"Pembatalan gagal",Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -104,7 +161,10 @@ public class PilihMeja extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        batalPesan();
+        Intent i=new Intent(this,PilihMeja.class);
+        i.putExtra("nota",nota);
+        startActivity(i);
+        finish();
     }
 
     private void batalPesan() {

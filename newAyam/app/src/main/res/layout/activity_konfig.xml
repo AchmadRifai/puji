@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/allBG"
+    tools:context=".Konfig">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+        <TableLayout
+            android:layout_width="match_parent"
+            android:background="@color/allBG"
+            android:layout_height="wrap_content"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="8dp"
+            tools:ignore="MissingConstraints">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="?attr/colorBackgroundFloating"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="Alamat Server" />
+
+                <EditText
+                    android:id="@+id/server"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:padding="5dp" />
+            </TableRow>
+
+            <TableRow
+                android:padding="10dp"
+                android:background="?attr/colorBackgroundFloating"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="Nomor Meja" />
+
+                <EditText
+                    android:id="@+id/meja"
+                    android:layout_width="wrap_content"
+                    android:padding="5dp"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="number" />
+            </TableRow>
+        </TableLayout>
+        <Button
+            android:id="@+id/submitConf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:gravity="center"
+            android:text="Save Configuration"
+            android:textAlignment="center"/>
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

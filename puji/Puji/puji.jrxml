@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="06964c7f-cf2d-4f1d-a4ce-9e29fb1ea033">
+	<queryString language="SQL">
+		<![CDATA[SELECT
+     pesanan.`nota` AS pesanan_nota,
+     pesanan.`meja` AS pesanan_meja,
+     pesanan.`nama` AS pesanan_nama,
+     pesanan.`hp` AS pesanan_hp,
+     pesanan.`tgl` AS pesanan_tgl,
+     pesanan.`byr` AS pesanan_byr,
+     pesanan.`susuk` AS pesanan_susuk,
+     pesanan.`total` AS pesanan_total,
+     item_pesanan.`menu` AS item_pesanan_menu,
+     item_pesanan.`qty` AS item_pesanan_qty,
+     item_pesanan.`hrg` AS item_pesanan_hrg,
+     menu.`harga` AS menu_harga,
+     menu.`nama` AS menu_nama,
+     menu.`satuan` AS menu_satuan
+FROM
+     `pesanan` pesanan INNER JOIN `item_pesanan` item_pesanan ON pesanan.`nota` = item_pesanan.`nota`
+     INNER JOIN `menu` menu ON item_pesanan.`menu` = menu.`kode`]]>
+	</queryString>
+	<field name="pesanan_nota" class="java.lang.String"/>
+	<field name="item_pesanan_menu" class="java.lang.String"/>
+	<group name="pesanan_nota">
+		<groupExpression><![CDATA[$F{pesanan_nota}]]></groupExpression>
+	</group>
+	<group name="item_pesanan_menu">
+		<groupExpression><![CDATA[$F{item_pesanan_menu}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

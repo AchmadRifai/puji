@@ -25,12 +25,14 @@ import wahyono.puji.projectskripsi.ws.Api;
 
 public class DftrMenu extends AppCompatActivity {
     private String nota,kode;
+    private boolean running;
     private RecyclerView rec;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dftr_menu);
+        running=true;
         bindingData();
         muat();
     }
@@ -44,6 +46,7 @@ public class DftrMenu extends AppCompatActivity {
     }
 
     private void muat() {
+        cek();
         Retrofit r=new Retrofit.Builder().baseUrl(Work.getUrl(this))
                 .addConverterFactory(GsonConverterFactory.create()).build();
         Api a=r.create(Api.class);
@@ -58,6 +61,10 @@ public class DftrMenu extends AppCompatActivity {
                 Toast.makeText(DftrMenu.this,"Gagal muat",Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    private void cek() {
+        new Thread().start();
     }
 
     private void prosesMuat(List<wahyono.puji.projectskripsi.ws.Menu> l) {

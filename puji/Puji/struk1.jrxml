@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" 
-language="java" name="null" pageWidth="283" pageHeight="425" whenNoDataType="NoDataSection" columnWidth="283" leftMargin="0" rightMargin="0" topMargin="0" 
-bottomMargin="0" uuid="64a2da87-d2c1-4208-9fc2-a15c5af25995">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="283" pageHeight="425" whenNoDataType="NoDataSection" columnWidth="283" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="64a2da87-d2c1-4208-9fc2-a15c5af25995">
 	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -17,7 +14,7 @@ bottomMargin="0" uuid="64a2da87-d2c1-4208-9fc2-a15c5af25995">
 		</conditionalStyle>
 	</style>
 	<parameter name="notane" class="java.lang.String"/>
-	<queryString language="SQL">
+	<queryString>
 		<![CDATA[SELECT
      pesanan.`nota` AS pesanan_nota,
      pesanan.`tgl` AS pesanan_tgl,
@@ -28,10 +25,14 @@ bottomMargin="0" uuid="64a2da87-d2c1-4208-9fc2-a15c5af25995">
      item_pesanan.`qty` AS item_pesanan_qty,
      item_pesanan.`hrg` AS item_pesanan_hrg,
      menu.`harga` AS menu_harga,
-     menu.`nama` AS menu_nama
+     menu.`nama` AS menu_nama,
+     pesanan.`nama` AS pesanan_nama,
+     pesanan.`hp` AS pesanan_hp
 FROM
      `pesanan` pesanan INNER JOIN `item_pesanan` item_pesanan ON pesanan.`nota` = item_pesanan.`nota`
-     INNER JOIN `menu` menu ON item_pesanan.`menu` = menu.`kode` where pesanan.`nota` =$P{notane}]]>
+     INNER JOIN `menu` menu ON item_pesanan.`menu` = menu.`kode`
+WHERE
+     pesanan.`nota` = $P{notane}]]>
 	</queryString>
 	<field name="pesanan_nota" class="java.lang.String"/>
 	<field name="pesanan_tgl" class="java.sql.Date"/>
@@ -43,25 +44,14 @@ FROM
 	<field name="item_pesanan_hrg" class="java.lang.String"/>
 	<field name="menu_harga" class="java.lang.String"/>
 	<field name="menu_nama" class="java.lang.String"/>
+	<field name="pesanan_nama" class="java.lang.String"/>
+	<field name="pesanan_hp" class="java.lang.String"/>
 	<group name="pesanan_nota">
 		<groupExpression><![CDATA[$F{pesanan_nota}]]></groupExpression>
 		<groupHeader>
 			<band height="37">
 				<frame>
 					<reportElement mode="Opaque" x="-21" y="7" width="264" height="14" forecolor="#B89F7D" backcolor="#F2EBDF" uuid="e2c12151-8270-48bc-aede-2fda0d001f62"/>
-					<rectangle>
-						<reportElement mode="Opaque" x="21" y="0" width="36" height="14" backcolor="#736343" uuid="f24c1d2a-ab0b-4e8f-9731-b8c1c0ba1d8f"/>
-						<graphicElement>
-							<pen lineWidth="0.0"/>
-						</graphicElement>
-					</rectangle>
-					<textField>
-						<reportElement style="SubTitle" x="68" y="0" width="196" height="14" forecolor="#736343" uuid="ea921545-5f1b-4c9c-bd17-27dce4e47391"/>
-						<textElement>
-							<font isBold="true"/>
-						</textElement>
-						<textFieldExpression><![CDATA[$F{pesanan_nota}]]></textFieldExpression>
-					</textField>
 				</frame>
 			</band>
 		</groupHeader>
@@ -73,7 +63,7 @@ FROM
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="65" splitType="Stretch">
+		<band height="94" splitType="Stretch">
 			<staticText>
 				<reportElement style="Title" x="0" y="0" width="233" height="31" uuid="64edf1f9-2ebd-4b54-8f83-c3737928b799"/>
 				<textElement verticalAlignment="Middle">
@@ -82,19 +72,34 @@ FROM
 				<text><![CDATA[Ayam Bakar]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="SubTitle" x="22" y="31" width="196" height="14" uuid="3a7e86ff-4348-475a-b6e3-5c4717426a6c"/>
+				<reportElement style="SubTitle" x="22" y="31" width="69" height="14" uuid="3a7e86ff-4348-475a-b6e3-5c4717426a6c"/>
 				<textElement>
 					<font fontName="Times New Roman" size="9" pdfFontName="Times-Roman"/>
 				</textElement>
 				<text><![CDATA[Wong Solo]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="45" width="243" height="19" uuid="d02b168e-85eb-4684-8f96-9487d457b422"/>
+				<reportElement x="0" y="45" width="140" height="11" uuid="d02b168e-85eb-4684-8f96-9487d457b422"/>
 				<textElement textAlignment="Right">
-					<font size="10"/>
+					<font size="8"/>
 				</textElement>
 				<text><![CDATA[Jalan Sunan Kalijogo No. 19 Tuban]]></text>
 			</staticText>
+			<textField>
+				<reportElement style="SubTitle" x="150" y="31" width="133" height="14" forecolor="#736343" uuid="ea921545-5f1b-4c9c-bd17-27dce4e47391"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pesanan_nota}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Column header" x="3" y="56" width="171" height="16" uuid="ffba6704-7fbd-4a69-8c1d-2e2c7c454523"/>
+				<textFieldExpression><![CDATA[$F{pesanan_nama}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Column header" x="3" y="72" width="171" height="16" uuid="51b2b1f1-c255-42d8-8dac-182e92b06c41"/>
+				<textFieldExpression><![CDATA[$F{pesanan_hp}]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<pageHeader>

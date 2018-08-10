@@ -4,17 +4,53 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/splash"
     android:clickable="true"
     tools:context="wahyono.puji.projectskripsi.MainActivity">
-
-    <TextView
-        android:id="@+id/textView"
+    <TableLayout
         android:layout_width="368dp"
         android:layout_height="495dp"
-        android:clickable="true"
-        android:gravity="center"
-        android:text="Tap To Order"
         tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="8dp" />
+        tools:layout_editor_absoluteY="8dp"
+        tools:ignore="MissingConstraints">
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nama" />
+            <EditText
+                android:id="@+id/namaPelanggan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="Name" />
+        </TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No. Hp" />
+            <EditText
+                android:id="@+id/noHp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="phone" />
+        </TableRow>
+        <TableRow
+            android:layout_height="match_parent"
+            android:layout_width="match_parent">
+            <Button android:layout_width="match_parent"
+                android:text="SUBMIT"
+                android:enabled="false"
+                android:id="@+id/goNota"
+                android:layout_height="wrap_content"/>
+        </TableRow>
+    </TableLayout>
+
 </android.support.constraint.ConstraintLayout>

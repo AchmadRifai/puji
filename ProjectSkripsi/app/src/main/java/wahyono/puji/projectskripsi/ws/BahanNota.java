@@ -10,6 +10,10 @@ public class BahanNota {
     @SerializedName("nota")
     private String nota;
 
+    public BahanNota() {
+        nota="";
+    }
+
     public String getNota() {
         return nota;
     }

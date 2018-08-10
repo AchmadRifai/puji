@@ -130,13 +130,15 @@ desired effect
 <%
     try{
         util.Db d=new util.Db();
-        java.sql.ResultSet r=d.getResult("select nota,meja from pesanan where not terima and submitted");
+        java.sql.ResultSet r=d.getResult("select nota,meja,nama,hp from pesanan where lagi and submitted");
         while(r.next()){
             %>
 <div class="box box-info">
             <div class="box-header with-border">
-                <h3 class="box-title">Pesanan Dari Meja <%out.print(r.getString("meja")); %></h3>
-
+                <h3 class="box-title">Pesanan Dari Meja <%out.print(r.getString("meja")); %><br>
+                    Nama : <%out.print(r.getString("nama")); %><br>
+                    No. Hp : <%out.print(r.getString("hp")); %>
+                </h3>
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                 </button>

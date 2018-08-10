@@ -19,7 +19,7 @@ public class Work {
         String s;
         Cursor c=db.query("konfig",new String[]{"alamat"},null,null,null,null,null);
         c.moveToFirst();
-        s=c.getColumnName(0);
+        s=c.getString(c.getColumnIndex("alamat"));
         c.close();
         d.close();
         return s;

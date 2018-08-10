@@ -20,23 +20,26 @@ import util.Db;
 @javax.ws.rs.Path("/pesan")
 public class PesanMenu {
     @javax.ws.rs.GET
-    @javax.ws.rs.Path("/{m}")
+    @javax.ws.rs.Path("/{m}/{nm}/{hp}")
     @javax.ws.rs.Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
-    public String dari(@PathParam("m") String m){
+    public String dari(@PathParam("m") String m,@PathParam("nm") String nm,@PathParam("hp") String hp){
         org.json.simple.JSONObject o=new org.json.simple.JSONObject();try {
             util.Db d=new util.Db();
             java.sql.Timestamp t=java.sql.Timestamp.valueOf(LocalDateTime.now());
             String s=m+t.getDate()+t.getMonth()+t.getYear()+t.getHours()+t.getMinutes()+t.getSeconds();
-            java.sql.PreparedStatement p=d.getPrep("insert into pesanan values(?,?,?,?,?,?,?,?,?)");
+            java.sql.PreparedStatement p=d.getPrep("insert into pesanan values(?,?,?,?,?,?,?,?,?,?,?,?)");
             p.setString(1, s);
             p.setInt(2, Integer.parseInt(m));
-            p.setDate(3, java.sql.Date.valueOf(LocalDate.now()));
-            p.setString(4, org.joda.money.Money.zero(CurrencyUnit.of("IDR")).toString());
-            p.setString(5, org.joda.money.Money.zero(CurrencyUnit.of("IDR")).toString());
+            p.setString(3, nm);
+            p.setString(4, hp);
+            p.setDate(5, java.sql.Date.valueOf(LocalDate.now()));
             p.setString(6, org.joda.money.Money.zero(CurrencyUnit.of("IDR")).toString());
-            p.setBoolean(7, false);
-            p.setBoolean(8, false);
+            p.setString(7, org.joda.money.Money.zero(CurrencyUnit.of("IDR")).toString());
+            p.setString(8, org.joda.money.Money.zero(CurrencyUnit.of("IDR")).toString());
             p.setBoolean(9, false);
+            p.setBoolean(10, false);
+            p.setBoolean(11, false);
+            p.setBoolean(12, true);
             p.execute();
             p.close();
             d.close();
@@ -49,7 +52,7 @@ public class PesanMenu {
 
     @javax.ws.rs.GET
     @javax.ws.rs.Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
-    @javax.ws.rs.Path("/{nota}/{menu}/{qty}")
+    @javax.ws.rs.Path("/add/{nota}/{menu}/{qty}")
     public String tambah(@PathParam("nota") String nota,@PathParam("menu") String menu,@PathParam("qty") String qty){
         org.json.simple.JSONObject o=new org.json.simple.JSONObject();try {
             Db d=new Db();
@@ -207,7 +210,7 @@ public class PesanMenu {
 			p.close();
 			d.close();
 			o.put("pesan", "Sukses");
-		}catch(SQLException ex){
+	 	}catch(SQLException ex){
 			o.put("pesan", "Error");
             Db.hindar(ex, nota);
 		}return o.toJSONString();
@@ -230,5 +233,47 @@ public class PesanMenu {
             o.put("pesan", "Error");
             Db.hindar(ex, nota);
         }return o.toJSONString();
+    }
+
+        @javax.ws.rs.GET
+        @javax.ws.rs.Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+        @javax.ws.rs.Path("/end/{nota}")
+        public String confirm(@PathParam("nota")String nota){
+            org.json.simple.JSONObject o=new org.json.simple.JSONObject();
+        try {
+            Db d=new Db();
+            java.sql.PreparedStatement p=d.getPrep("update pesanan set lagi=? where nota=?");
+            p.setBoolean(1, false);
+            p.setString(2, nota);
+            p.execute();
+            p.close();
+            d.close();
+            o.put("pesan", "Sukses");
+        } catch (SQLException ex) {
+            o.put("pesan", "Error");
+            Db.hindar(ex, "android");
+        } return o.toJSONString();
+        }
+
+        @javax.ws.rs.GET
+        @javax.ws.rs.Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+        @javax.ws.rs.Path("/lagi/{nota}")
+        public String lagiKah(@PathParam("nota")String nota){
+            org.json.simple.JSONObject o=new org.json.simple.JSONObject();try {
+            Db d=new Db();
+            java.sql.PreparedStatement p=d.getPrep("select lagi from pesanan where nota=?");
+            p.setString(1, nota);
+            java.sql.ResultSet r=p.executeQuery();
+            if(r.next()){
+                if(r.getBoolean("lagi"))o.put("pesan", "Dapat");
+                else o.put("pesan", "Keluar");
+            }else o.put("pesan", "Error");
+            r.close();
+            p.close();
+            d.close();
+        } catch (SQLException ex) {
+            o.put("pesan", "Error");
+            Db.hindar(ex, "android");
+        } return o.toJSONString();
         }
 }

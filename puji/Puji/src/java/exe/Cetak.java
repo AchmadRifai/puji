@@ -93,11 +93,12 @@ public class Cetak extends HttpServlet {
 
     private void changeData(Db d, String nota, Money byr) throws SQLException {
         Money total=getTotal(d,nota),kembali=byr.minus(total);
-        java.sql.PreparedStatement p=d.getPrep("update pesanan set susuk=?,byr=?,cetak=? where nota=?");
+        java.sql.PreparedStatement p=d.getPrep("update pesanan set susuk=?,byr=?,cetak=?,lagi=? where nota=?");
         p.setString(1, ""+kembali);
         p.setString(2, ""+byr);
         p.setBoolean(3, true);
-        p.setString(4, nota);
+        p.setBoolean(4, false);
+        p.setString(5, nota);
         p.execute();
         p.close();
     }

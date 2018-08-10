@@ -13,14 +13,6 @@
         <servlet-class>php.Login</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>Jersey RESTful Application</servlet-name>
-        <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
-        <init-param>
-            <param-name>jersey.config.server.provider.packages</param-name>
-            <param-value>ws.json</param-value>
-        </init-param>
-    </servlet>
-    <servlet>
         <servlet-name>terimaPesan.exe</servlet-name>
         <servlet-class>exe.TerimaPesan</servlet-class>
     </servlet>
@@ -147,10 +139,6 @@
     <servlet-mapping>
         <servlet-name>login.php</servlet-name>
         <url-pattern>/login.php</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>Jersey RESTful Application</servlet-name>
-        <url-pattern>/json/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>terimaPesan.exe</servlet-name>
