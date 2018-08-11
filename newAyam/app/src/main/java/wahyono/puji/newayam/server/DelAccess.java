@@ -12,7 +12,7 @@ import java.io.IOException;
 import wahyono.puji.newayam.util.Access;
 import wahyono.puji.newayam.util.Work;
 
-public class DelAccess extends AsyncTask<Void, Void, Boolean> {
+public class DelAccess extends AsyncTask<String, Void, Boolean> {
     private Activity a;
     private Runnable ya, tidak;
 
@@ -23,10 +23,10 @@ public class DelAccess extends AsyncTask<Void, Void, Boolean> {
     }
 
     @Override
-    protected Boolean doInBackground(Void... voids) {
+    protected Boolean doInBackground(String... strings) {
         boolean b = false;
-        String nota = Work.getNota(a); try {
-            String data = Work.dataAccess(Work.getURL(a) + Access.DEL_ITEM + nota);
+        String nota = Work.getNota(a), menu = strings[0]; try {
+            String data = Work.dataAccess(Work.getURL(a) + Access.DEL_ITEM + nota + "/" + menu);
             JsonObject o = new JsonParser().parse(data).getAsJsonObject();
             String pesan = o.get("pesan").getAsString();
             b = "Sukses".equals(pesan);
@@ -37,7 +37,7 @@ public class DelAccess extends AsyncTask<Void, Void, Boolean> {
 
     @Override
     protected void onPostExecute(Boolean aBoolean) {
-        if(aBoolean)ya.run();
+        if(aBoolean) ya.run();
         else tidak.run();
     }
 }

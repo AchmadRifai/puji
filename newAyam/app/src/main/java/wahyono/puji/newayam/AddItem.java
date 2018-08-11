@@ -68,6 +68,7 @@ public class AddItem extends AppCompatActivity {
     }
 
     private void ya() {
+        startActivity(new Intent(this, MainActivity.class));
         finish();
     }
 

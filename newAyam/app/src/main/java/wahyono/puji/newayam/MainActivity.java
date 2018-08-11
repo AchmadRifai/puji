@@ -73,7 +73,8 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
         switch (id) {
             case R.id.cart:
-                Toast.makeText(this, "Belum", Toast.LENGTH_LONG).show();
+                startActivity(new Intent(this, Cart.class));
+                finish();
                 return true;
             case R.id.batal:
                 batalkanPesanan();

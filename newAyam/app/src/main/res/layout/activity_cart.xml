@@ -6,10 +6,33 @@
     android:layout_height="match_parent"
     android:background="@color/allBG"
     tools:context=".Cart">
-    <android.support.v7.widget.RecyclerView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_marginTop="10dp"
-        android:scrollbars="vertical"
-        android:id="@+id/lstItem"
-        android:layout_height="match_parent"/>
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/myOrder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:scrollbars="vertical"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="8dp"
+            android:layout_weight="0.61" />
+        <TextView
+            android:id="@+id/totalan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:textAlignment="viewEnd"
+            android:textAppearance="@android:style/TextAppearance.Material.Large"
+            tools:ignore="NewApi,RtlCompat" />
+        <Button
+            android:id="@+id/submitMyOrder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:text="Submit My Order"
+            android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button.Borderless.Colored" />
+    </LinearLayout>
 </android.support.constraint.ConstraintLayout>
