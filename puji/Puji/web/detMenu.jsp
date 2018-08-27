@@ -1,6 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%><%
     util.General.ajarAdmin(request, response);
-    if(null!=request.getParameter("menu")){
+    if(null!=request.getSession().getAttribute("menu")){
+        String menu = "" + request.getSession().getAttribute("menu");
 %><!DOCTYPE html>
 <!--
 This is a starter template page. Use this page to start your new project from
@@ -11,7 +12,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <meta charset="utf-8">
    <meta http-equiv="refresh" content="5">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Detail Menu <%out.print(request.getParameter("kode")); %> Admin | Ayam Bakar Wong Solo</title>
+  <title>Detail Menu <%out.print(menu); %> Admin | Ayam Bakar Wong Solo</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
@@ -131,17 +132,17 @@ desired effect
                 <%
                     try{
                         util.Db d=new util.Db();
-                        java.sql.PreparedStatement p=d.getPrep("select count(kode)as itung from menu where kat=?");
-                        p.setInt(1, Integer.parseInt(request.getParameter("kode")));
+                        java.sql.PreparedStatement p=d.getPrep("select count(bahan)as itung from bahan where menu=?");
+                        p.setString(1, menu);
                         java.sql.ResultSet r=p.executeQuery();
-                        if(r.next())out.print(""+r.getInt("itung")+" Menu");
+                        if(r.next())out.print(""+r.getInt("itung")+" Bahan");
                         r.close();
                         p.close();
                         d.close();
                     }catch(java.sql.SQLException ex){util.Db.hindar(ex, request.getRemoteAddr());}
                 %>
             </span>
-                <a href="editKat.php?kode=<%out.print(request.getParameter("kode")); %>" class="btn btn-box-tool">
+                <a href="editMenu.php?kode=<%out.print(menu); %>" class="btn btn-box-tool">
                     <i class="fa fa-edit"></i>
                 </a>
             <button type="button" class="btn btn-box-tool" data-widget="collapse">
@@ -157,8 +158,8 @@ desired effect
                     <%
                         try{
                             util.Db d=new util.Db();
-                            java.sql.PreparedStatement p=d.getPrep("select kode,gbr,nama,harga from menu where kat=?");
-                            p.setInt(1, Integer.parseInt(request.getParameter("kode")));
+                            java.sql.PreparedStatement p=d.getPrep("select bahan,qty from bahan where menu=?");
+                            p.setString(1, menu);
                             java.sql.ResultSet r=p.executeQuery();
                             while(r.next()){
                     %>
@@ -174,15 +175,14 @@ desired effect
                             %></span>
                     </li>
                     <%
-                            }r.close();
-p.close();
+                            }r.close(); p.close();
                             d.close();
                         }catch(java.sql.SQLException ex){util.Db.hindar(ex, request.getRemoteAddr());}
                     %>
                 </ul>
             </div>
                 <div class="box-footer text-center">
-                    <a class="btn btn-warning" href="editKat.php?kode=<%
+                    <a class="btn btn-warning" href="editMenu.php?kode=<%
                         out.print(request.getParameter("kode"));
                         %>"><i class="fa fa-edit"></i> Edit</a>
                         <a class="btn btn-danger" href="#" data-toggle="modal" data-target="#del">
@@ -193,14 +193,14 @@ p.close();
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                        <h4 class="modal-title">Hapus Kategori <%out.print(request.getParameter("kode")); %></h4>
+                                        <h4 class="modal-title">Hapus Menu <%out.print(menu); %></h4>
                                     </div>
                                     <div class="modal-body">
                                         <p>Hapus Kategori ini?</p>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                                        <a href="delKat.exe?kode=<%out.print(request.getParameter("kode")); %>" class="btn btn-danger">OK</a>
+                                        <a href="delMenu.exe?kode=<%out.print(menu); %>" class="btn btn-danger">OK</a>
                                     </div>
                                 </div>
                             </div>
